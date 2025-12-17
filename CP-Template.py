@@ -19,17 +19,17 @@ if os.path.exists('task.inp'):
 if LOCAL:
     _buffer = io.BytesIO(sys.stdin.buffer.read())
     raw_input = _buffer.readline
-    def input():
+    def input() -> str: #type: ignore
         while True:
-            line = raw_input().decode().rstrip('\n')
+            line: str = raw_input().decode().rstrip('\n')
             if line: return line
             if _buffer.tell() == len(_buffer.getvalue()):
                 return ''
 else:
-    _raw = sys.stdin.readline
-    def input():
+    _origin = sys.stdin.readline
+    def input() -> str: #type: ignore
         while 1:
-            line = _raw().rstrip('\n')
+            line: str = _origin().rstrip('\n')
             if line: return line
             if not line: return ''
 
